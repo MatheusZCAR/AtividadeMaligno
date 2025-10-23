@@ -1,3 +1,4 @@
-public class Comunicado {
-    
-}
+import java.io.*;
+
+public class Comunicado implements Serializable
+{}
