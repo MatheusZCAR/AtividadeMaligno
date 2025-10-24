@@ -7,13 +7,13 @@ import java.util.Scanner;
 
 public class Distribuidor {
     
-    // Define a constante do limite máximo para 1.400.000.000
+    // Define a constante do limite máximo
     private static final int LIMITE_MAXIMO = 1_400_000_000;
     
     // Porta que os receptores (R) estão escutando
     private static final int PORTA_SERVIDORES = 12345;
     
-    // IPs dos servidores R (hard coded)
+    // IPs dos servidores R
     // ATENÇÃO: Para teste local, use "127.0.0.1" repetido ou IPs reais se rodar em máquinas diferentes.
     private static final String[] IPS_SERVIDORES = {
         "127.0.0.1", 
@@ -21,7 +21,7 @@ public class Distribuidor {
         "127.0.0.1"  // (Ajuste para IPs reais para o teste de distribuição real!)
     };
     
-    // Classe interna para guardar os resultados parciais (para ser thread-safe)
+    // Classe interna para guardar os resultados parciais
     private static class ResultadoParcial {
         public int contagem = 0;
     }
@@ -31,9 +31,9 @@ public class Distribuidor {
         long inicioTotal = System.currentTimeMillis();
 
         try {
-            // --- 1. Preparação: Input do Usuário e Validação (Mantido o código robusto) ---
+            //Parte 1 - Input do Usuário e Validação
             
-            System.out.println("--- Programa Distribuidor (D) ---");
+            System.out.println(".-.-. Programa Distribuidor .-.-.");
             System.out.println("ATENÇÃO: O limite máximo para o vetor é de " + String.format("%,d", LIMITE_MAXIMO) + " elementos.");
 
             int tamanhoVetor = 0;
@@ -60,7 +60,7 @@ public class Distribuidor {
             System.out.print("Deseja testar um número que não existe (111)? (s/n): ");
             boolean testarNaoExistente = scanner.next().trim().equalsIgnoreCase("s");
             
-            // --- 2. Geração de Dados ---
+            // Parte 2 - Geração de Dados
             
             byte[] vetorGrande = gerarVetorAleatorio(tamanhoVetor, (byte)-100, (byte)100);
             
@@ -80,7 +80,7 @@ public class Distribuidor {
 
             final byte numeroProcuradoThread = numeroProcurado;
 
-            // --- 3. Divisão de Trabalho, Criação de Threads e Execução ---
+            // Parte 3 - Divisão de Trabalho, Criação de Threads e Execução
             
             List<Thread> threads = new ArrayList<>();
             List<ResultadoParcial> resultados = new ArrayList<>();
@@ -99,7 +99,7 @@ public class Distribuidor {
                 
                 resultados.add(resultado);
                 
-                // 4. Cria a Thread anônima para cada servidor
+                // Cria uma Thread anônima para cada servidor
                 Thread thread = new Thread(() -> {
                     Socket conexao = null;
                     ObjectOutputStream transmissor = null;
@@ -109,7 +109,7 @@ public class Distribuidor {
                         System.out.println("[D] Thread para " + ipAtual + " iniciando conexão...");
                         conexao = new Socket(ipAtual, PORTA_SERVIDORES);
                         
-                        // Ordem: OOS antes do OIS para evitar deadlocks
+                        // OOS antes do OIS para evitar deadlock
                         transmissor = new ObjectOutputStream(conexao.getOutputStream());
                         receptor = new ObjectInputStream(conexao.getInputStream());
 
@@ -132,7 +132,7 @@ public class Distribuidor {
                     } catch (Exception e) {
                         System.err.println("[D] ERRO de comunicação com " + ipAtual + ": " + e.getMessage());
                     } finally {
-                        // Não fechamos a conexão AQUI. Ela será fechada após o encerramento do ciclo.
+                        // Não fechamos a conexão aqui, ela fecha após o encerramento do ciclo.
                     }
                 });
                 
@@ -142,11 +142,11 @@ public class Distribuidor {
                 inicio = fim;
             }
 
-            // --- 5. Sincronização e Compilação ---
+            // Sincronização e Compilação
 
             int contagemFinal = 0;
             for (Thread thread : threads) {
-                thread.join(); // Espera cada thread terminar (REQUISITO: Thread.join())
+                thread.join(); // Espera cada thread terminar
             }
 
             // Soma os resultados parciais
@@ -154,18 +154,18 @@ public class Distribuidor {
                 contagemFinal += resultado.contagem;
             }
 
-            // --- 6. Medição e Exibição ---
+            // Medição e Exibição
             
             long fimTotal = System.currentTimeMillis();
             
-            System.out.println("\n--- RESULTADO FINAL ---");
+            System.out.println("\n.-.-. RESULTADO FINAL .-.-.");
             System.out.printf("[D] Contagem Paralela e Distribuída Final: %d ocorrências do número %d%n", contagemFinal, numeroProcurado);
             System.out.printf("[D] Tempo total de execução: %.3f segundos%n", (fimTotal - inicioTotal) / 1000.0);
             
         } catch (Exception e) {
             System.err.println("[D] ERRO GERAL NO DISTRIBUIDOR: " + e.getMessage());
         } finally {
-            // --- 7. Encerramento (Envia ComunicadoEncerramento para todos) ---
+            // Encerramento
             System.out.println("\n[D] Iniciando o envio de ComunicadoEncerramento para todos os servidores...");
              for(String ip : IPS_SERVIDORES) {
                  enviarEncerramento(ip);
@@ -174,9 +174,7 @@ public class Distribuidor {
         }
     }
     
-    /**
-     * Lógica para enviar o ComunicadoEncerramento, extraída do antigo Conectora.
-     */
+
     private static void enviarEncerramento(String ip) {
          Socket conexao = null;
          ObjectOutputStream transmissor = null;
@@ -199,11 +197,9 @@ public class Distribuidor {
          }
     }
     
-    /**
-     * Gera um vetor de bytes com números aleatórios no range [min, max] (inclusivo).
-     */
+    //Gera um vetor de bytes com números aleatórios no range.
+
     private static byte[] gerarVetorAleatorio(int tamanho, byte min, byte max) {
-        // ... (método idêntico ao anterior) ...
         byte[] vetor = new byte[tamanho];
         for (int i = 0; i < tamanho; i++) {
             int aleatorio = ((int)(Math.random() * (max - min + 1))) + min;
