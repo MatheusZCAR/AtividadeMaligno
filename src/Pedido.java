@@ -1,13 +1,13 @@
 public class Pedido extends Comunicado {
-    private int[] numeros;
+    private byte[] numeros;
     private int procurado;
 
-    public Pedido(int[] numeros, int procurado) {
-        this.numeros = numeros;
+    public Pedido(byte[] subVetor, int procurado) {
+        this.numeros = subVetor;
         this.procurado = procurado;
     }
 
-    public int[] getNumeros() {
+    public byte[] getNumeros() {
         return numeros;
     }
 

@@ -94,7 +94,7 @@ public class R {
     }
 
     private static int contarParalelo(Pedido pedido) {
-        int[] numeros = pedido.getNumeros();
+        byte[] numeros = pedido.getNumeros();
         int procurado = pedido.getProcurado();
         int tamanho = numeros.length;
         
