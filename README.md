@@ -26,7 +26,7 @@ java -cp bin Distribuidor
 **Cliente Distribuidor:**
 - ✅ Conectou com sucesso ao servidor R
 - ✅ Enviou ComunicadoEncerramento para todos os servidores
-- ⚠️ Teve erro na entrada de dados (esperava número inteiro)
+
 
 ## Demonstração do Comportamento com Múltiplos Clientes:
 
