@@ -58,4 +58,6 @@ A implementação da comunicação básica com Sockets foi um ótimo exercício 
 ​Foi um aprendizado intenso que solidificou meus conhecimentos sobre os desafios práticos da programação concorrente e da comunicação em rede.
 
 
-#### Beatrix
+#### Beatriz:
+
+Dentre os desafios enfrentados no projeto, dou ênfase na fase de integração do código, que foi onde realmente juntamos as peças de todo o time. Essa parte exigiu uma dedicação extra, especialmente no debugging durante os testes, que foi fundamental para conseguirmos aplicar os patches de correção e garantir que o sistema ficasse robusto. Achei super interessante e um ótimo aprendizado a forma como aplicamos a divisão de tarefas utilizando o conceito de paralelismo. Ver a performance melhorar com essa otimização foi bem gratificante, e o fato de termos usado Java facilitou muito, já que é uma linguagem que adoro trabalhar. O projeto era complexo, não era nada simples, mas era exatamente esse o desafio. Ter conseguido entregar e fazer tudo funcionar perfeitamente me deu uma sensação de competência muito grande. Fiquei feliz e com o sentimento de que evoluí muito.
